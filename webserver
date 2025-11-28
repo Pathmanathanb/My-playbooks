@@ -1,0 +1,24 @@
+---
+- name: Check the Apache is up and running deploye the app
+  hosts: webserver
+  become: yes
+  tasks: 
+    - name: Ensure the Apache is installed 
+      ansible.builtin.package:
+       name: httpd
+       state: present
+    - name: Ensure the Apache is running
+      ansible.builtin.service:
+       name: https
+       state: started
+       enabled: yes   
+    - name: Deploye the html file using copy module
+      ansible.builtin.copy:
+      #use src:./files/index.html (use content or source file)
+       content: 
+         #copy module web file
+       dest: /var/www/html/index.html
+       owner: root
+       group: root
+       mode: '0644'    
+
